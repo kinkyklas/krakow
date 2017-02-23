@@ -1,16 +1,13 @@
 <?php
 
-$servername = "localhost";
-$username = "krakow_admin";
-$password = "krakow";
-$dbname = "db_krakow";
 
+include('config.php');
 
 if (isset($_GET["action"]))
 {
 
   // Create connection
-  $conn = mysqli_connect($servername, $username, $password, $dbname);
+  $conn = mysqli_connect(DB_SERVER,DB_USERNAME,DB_PASSWORD,DB_DATABASE);
   $conn->set_charset("utf8");
 
   $action = mysqli_real_escape_string($conn,$_GET["action"]);
