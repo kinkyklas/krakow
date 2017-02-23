@@ -1,0 +1,149 @@
+body{
+  background-image: url("../../content/imgs/krakow2.jpg");
+  background-size: cover;
+  font-family: 'Open Sans', sans-serif;
+   margin:0px;
+   padding:0px;
+  color: #5E5E5E;
+
+}
+
+header
+{
+  background-color:white;
+  padding:15px;
+  overflow:auto;
+}
+
+header p
+{
+  padding:0px;
+  margin:0px;
+  float:right;
+
+}
+
+a{
+  color:black;
+  text-decoration: none;
+  font-weight: bold;
+
+}
+
+a:hover {
+  text-decoration: underline;
+}
+section{
+  width:70%;
+  margin:auto;
+  background-color: white;
+  padding:20px;
+  margin-top:40px;
+  overflow:auto;
+  border-radius:3px;
+}
+
+td {
+  padding-top:10px;
+}
+
+/* translation */
+
+.translation-item
+{
+  overflow:Auto;
+  border-bottom: 1px solid lightgray;
+  padding:4px;
+}
+
+.translation-item div
+{
+  float:left;
+  width:240px;
+}
+
+.translation-item div:nth-child(1)
+{
+  font-weight: bold;
+}
+
+#translation-headers
+{
+  overflow:auto;
+
+}
+
+#translation input[type='text']
+{
+  width:160px;
+  font-family: 'Open Sans', sans-serif;
+  padding:2px;
+  font-size:12pt;
+  margin-left:-3px;
+}
+
+#translation img
+{
+  width:30px;
+  height:30px;
+
+  cursor: pointer;
+}
+
+#translation p{
+background-color:#FF8E8E;
+color:red;
+border:1px solid red;
+border-radius:5px;
+padding:20px;
+font-weight:bold;
+}
+
+
+#translation-headers div
+{
+  width:240px;
+  float:left;
+  min-height: 2px;
+  font-weight: bold;
+}
+
+
+.operation-success
+{
+  background:lightgreen;
+  padding:10px;
+
+  border-radius:5px;
+  font-weight:bold;
+  color:green;
+  border:1px solid green;
+  width:80%;
+  margin:auto;
+  margin-top:20px;
+  margin-bottom:20px;
+  text-align:center;;
+}
+
+#edit-select-language
+{
+  overflow:auto;
+}
+
+#edit-select-language img
+{
+  border: 1px solid #efefef;
+}
+
+#edit-select-language div
+{
+  float:left;
+  padding:5px;
+  cursor:pointer;
+}
+
+#text-editor-save-img
+{
+    width:100px;
+    height:100px;
+}

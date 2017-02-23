@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+
+<html ng-app="app">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:700|Roboto|Open+Sans:300" rel="stylesheet">
+    <link href="content/site.css" rel="stylesheet">
+    <script type="text/javascript" src="scripts/jquery-1.10.2.min.js"></script>
+       <link rel="stylesheet" href="content/textAngular.css" type="text/css">
+    <script type="text/javascript" src="https://code.angularjs.org/1.2.21/angular.js"></script>
+    <title>Guía de Cracovia</title>
+</head>
+<body ng-controller="MainCtrl" ng-init="init()">
+    <header>
+        <section id="header_menu">
+            <div>
+                KINGA JODLOWSKA  <span> +48 509 245 404</span>
+
+                <p ng-repeat="lang in languages" ng-class="{'selected' : lang.IsSelected == '1'}" ng-click="changeLanguage(lang)">
+                    <img src="content/imgs/{{lang.FlagImg}}" />
+                </p>
+
+            </div>
+            <a href="#" aria-data="contact">{{translation.Contact}}</a>
+            <a href="#" aria-data="about">{{translation.About}}</a>
+            <a href="#" aria-data="tours">{{translation.Tours}}</a>
+
+        </section>
+    </header>
+    <div id="bg">
+
+        <h1>
+            {{translation.Headline}}
+        </h1>
+    </div>
+
+    <section id="container">
+        <section id="content">
+            <section id="tours">
+                <h2 class="h2">{{translation.Tours}}</h2>
+
+                <div ng-repeat="tour in tours" class="tour-container">
+                    <div class="tour-img">
+                        <img src="content/imgs/tours/{{tour.Img}}" ng-click="zoomImg(this)" />
+                        <p class="tour-price">{{tour.Price}}:-</p>
+                    </div>
+                      <div ng-repeat="item in tour.Languages | filter: filterOnLanguageId">
+                        <p>{{item.Title}} <span class="tour-hours">{{tour.Duration}} hrs</span></p>
+                        <p>{{item.ShortDescription}}</p>
+                      </div>
+
+                    <a href="#">details...</a>
+
+
+                </div>
+            </section>
+            <section id="about">
+                <h2 class="h2">{{translation.About}}</h2>
+                <div ng-model="textToEdit"></div>
+                <div id="about-img"><img src="content/imgs/kinga.png"></div>
+                  <div ta-bind ng-model="aboutText"></div>
+            </section>
+            <footer>
+                <div id="contact">
+                    <h3 id="contact-header">{{translation.Contact}}</h3>
+                      <div ta-bind ng-model="contactText"></div>
+                </div>
+                <div id="copyright">
+                    copyright @ 2017 Salsiccia design
+                </div>
+            </footer>
+
+        </section>
+    </section>
+    <script src='scripts/textAngular-rangy.min.js'></script>
+    <script src='scripts/textAngular-sanitize.min.js'></script>
+    <script src='scripts/textAngular.min.js'></script>
+      <script src='scripts/underscore-min.js'></script>
+    <script type="text/javascript" src="scripts/site.js"></script>
+</body>
+</html>

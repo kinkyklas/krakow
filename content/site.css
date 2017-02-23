@@ -1,0 +1,270 @@
+body
+{
+   font-family: 'Open Sans', sans-serif;
+    margin:0px;
+    padding:0px;
+   color: #5E5E5E;
+   overflow: hidden;
+}
+
+
+header {
+
+    height:50px;
+    border-bottom:1px solid lightgray;
+    position:absolute;
+    z-index:2;
+    top:0px;
+    left:0px;
+    right:17px;
+    background-color:white;
+
+
+}
+
+#header_menu {
+
+    font-weight:bold;
+    font-size: 11pt;
+
+    width:90%;
+    margin:auto;
+
+}
+
+#header_menu div {
+    float:left;
+   color: #d45d2f;
+   width:500px;
+   padding-top:17px;
+
+}
+
+#header_menu div p {
+    float:right;
+    margin:0px 10px 0px 0px;
+    opacity:0.2;
+    cursor:pointer;
+
+}
+
+#header_menu div p img {
+    border-radius:2px;
+    border:1px solid lightgray;
+
+}
+
+#header_menu div span {
+    color:#5E5E5E;
+    background-image:url('imgs/call.png');
+    background-repeat:no-repeat;
+    padding-left:18px;
+    margin-left:10px;
+    background-position-y:center;
+}
+
+
+#header_menu .selected {
+
+    opacity:1.0;
+
+}
+
+
+
+#header_menu a {
+    float:right;
+    border-left: 1px solid lightgray;
+    min-width:80px;
+    padding:15px 10px 15px 10px ;
+    margin:0px;
+    text-align:center;
+    color:#5E5E5E;
+    text-decoration:none;
+}
+
+
+#header_menu a:nth-child(1) {
+    border-right: 1px solid #f6f6f6;
+}
+
+
+    #header_menu a:hover {
+        color:#d45d2f;
+    }
+
+#bg {
+    background-image: url('imgs/krakow2.jpg');
+    height:700px;
+    width:100%;
+    background-size:cover;
+    padding:0px;
+    margin:0px;
+
+}
+
+#bg h1 {
+     color:white;
+    font-size:90pt;
+    font-weight:bold;
+    padding: 100px 0px 0px 30px;
+    letter-spacing:-4px;
+    margin:0px;
+    line-height:103px;
+    text-shadow:2px 1px 1px #5E5E5E;
+
+
+}
+
+#container {
+    position:absolute;
+    width:100%;
+    height:100%;
+    overflow-x:no-display;
+    z-index:1;
+    top:0px;
+    overflow-y:scroll;
+
+}
+
+#content {
+    margin-top:700px;
+    padding-top:50px;
+
+    width:100%;
+    background-color:#fafafa;
+
+}
+
+#content section {
+    width:1200px;
+    margin:auto;
+    padding-bottom:40px;
+    overflow:auto;
+}
+
+.h2 {
+    padding:5px;
+    font-size:14pt;
+    border-bottom: 1px solid lightgray;
+}
+
+
+
+.tour-container {
+    width:350px;
+    /*border-radius:10px;*/
+    background-color:white;
+    overflow:auto;
+    float:left;
+    margin:20px;
+
+}
+
+.tour-container p {
+    padding:10px;
+}
+
+.tour-hours {
+    font-size:9pt;
+    color:#d52a2a;
+}
+
+.tour-container img {
+    transform:scale(1.2);
+    height:300px;
+
+}
+
+.tour-container img:hover {
+    height:300px;
+    transform:scale(1.0);
+    transition:all 0.7s ease;
+
+}
+
+.tour-container a {
+    float:right;
+    padding:10px;
+    color:black;
+    text-decoration:none;
+    font-size:10pt;
+}
+
+.tour-container a:hover {
+
+    text-decoration:underline
+
+}
+
+.tour-img {
+    width:350px;
+    height:300px;
+    overflow:hidden;
+    position:relative;
+   /* border-radius:5px 5px 0px 0px;*/
+
+}
+
+.tour-price {
+    position:absolute;
+    bottom:-10px;
+    left:20px;
+    color:white;
+    font-size:23pt;
+    text-shadow:2px 1px 1px #5E5E5E;
+    font-weight:700;
+}
+
+
+#about-img
+{
+  float:right;
+  width:300px;
+  padding:20px;
+  background-color:white;
+  border:1px solid lightgray;
+  border-radius:4px;
+}
+
+#about-img img{
+  width:100%;
+}
+
+footer {
+    width:100%;
+    height:300px;
+    background-image:url('imgs/footer.jpg');
+    font-weight:100;
+    font-size:10pt;
+    position:relative;
+    color:white;
+
+}
+
+    #contact {
+    width:70%;
+    margin:auto;
+    }
+
+#contact-header {
+    padding-top:30px;
+    font-weight:300;
+    font-size:12pt;
+
+}
+
+#copyright {
+    position:absolute;
+    bottom:0px;
+    width:100%;
+    height:60px;
+    background-color:#383735;
+    margin:0px;
+    text-align:center;
+    color:white;
+    font-weight:300;
+    padding-top:25px;
+    font-size:10pt;
+
+}
