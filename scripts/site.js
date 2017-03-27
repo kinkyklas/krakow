@@ -40,6 +40,7 @@ app.controller('MainCtrl', function ($scope,$http,$interval) {
     {
         $scope.showDetailedTour = true;
         $scope.tourDetailsTexts = item;
+        $scope.tourDetailsInfo = tour;
         $("#tour-details").css("background-image", "url('content/imgs/uploads/"+tour.Img+"')");
 
     }

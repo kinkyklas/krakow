@@ -9,14 +9,14 @@
     <link href="content/site.css" rel="stylesheet">
     <script type="text/javascript" src="scripts/jquery-1.10.2.min.js"></script>
        <link rel="stylesheet" href="content/textAngular.css" type="text/css">
-    <script type="text/javascript" src="https://code.angularjs.org/1.2.21/angular.js"></script>
+    <script type="text/javascript" src="scripts/angular.min.js"></script>
     <title>Guía de Cracovia</title>
 </head>
 <body ng-controller="MainCtrl" ng-init="init()">
     <header>
         <section id="header_menu">
             <div>
-                KINGA JODLOWSKA  <span> +48 509 245 404</span>
+               WWW.JUMPINCRACOW.COM  <span> +48 509 245 404</span>
 
                 <p ng-repeat="lang in languages" ng-class="{'selected' : lang.IsSelected == '1'}" ng-click="changeLanguage(lang)">
                     <img src="content/imgs/{{lang.FlagImg}}" />
@@ -32,13 +32,20 @@
     <div id="bg"  ng-show="!showDetailedTour">
 
         <h1>
-            {{translation.Headline}}
+          {{translation.Headline}}
         </h1>
+
     </div>
 
     <section id="tour-details" ng-show="showDetailedTour">
         <div>
+          <h2>{{tourDetailsTexts.Title}}</h2>
+          Price: {{tourDetailsInfo.Price}} zloty  Duration: {{tourDetailsInfo.Duration}} hrs
+          <hr />
+
           <textarea readonly>{{tourDetailsTexts.LongDescription}}</textarea>
+
+          <a href="#" ng-click="showDetailedTour = false">Back</a>
         </div>
     </section>
     <section id="container" ng-show="!showDetailedTour">
