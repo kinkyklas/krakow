@@ -122,7 +122,28 @@ font-weight:bold;
   margin:auto;
   margin-top:20px;
   margin-bottom:20px;
-  text-align:center;;
+  text-align:center;
+}
+
+.operation-failed
+{
+  background-color:#f9d1d1;
+  padding:10px;
+
+  border-radius:5px;
+  font-weight:bold;
+  color:red;
+  border:1px solid red;
+  width:80%;
+  margin:auto;
+  margin-top:20px;
+  margin-bottom:20px;
+  text-align:center;
+}
+
+.editable-sections
+{
+  display:none;
 }
 
 #edit-select-language
@@ -146,4 +167,100 @@ font-weight:bold;
 {
     width:100px;
     height:100px;
+}
+
+#upload-pictures-gallery
+{
+  overflow:auto;
+}
+
+#upload-pictures-gallery img
+{
+  max-width:100%;
+}
+
+#upload-pictures-gallery div{
+
+  border: 1px solid lightgray;
+  padding:7px;
+  margin: 5px;
+  float:left;
+  width:200px;
+  min-height:230px;
+  text-align:center;
+  border-radius:3px;
+}
+
+
+#upload-pictures-form
+{
+  padding:10px;
+  border:1px solid lightgray;
+  border-radius:3px;
+  background-color:#f7f7f7;
+}
+
+#upload-pictures-form input
+{
+  padding:4px;
+  margin:8px;
+}
+
+#edit-tour-selected-picture-section
+{
+  overflow: auto;
+  width:100%;
+}
+
+.edit-tour-section-part
+{
+  overflow: auto;
+  width:100%;
+  line-height: 30px;
+  margin-bottom:30px;
+}
+
+.edit-tour-section-part input
+{
+  width:300px;
+}
+
+.edit-tour-section-part img
+{
+  border:1px solid lightgray;
+  margin-right:6px;
+}
+
+#tour-long-description textarea
+{
+  width:400px;
+  height:150px;
+}
+
+#tour-long-description div
+{
+  float:left;
+}
+
+#edit-tour-selected-picture-section div{
+  float:left;
+  width:150px;
+  padding:5px;
+  margin:5px;
+  border:1px solid lightgray;
+  text-align:center;
+  opacity:0.5;
+  border-radius:3px;
+
+}
+
+#edit-tour-selected-picture-section img{
+  max-width:100%;
+
+}
+
+#edit-tour-selected-picture-section .edit-tour-selected-picture
+{
+  background-color:#69e069;
+  opacity:1.0;
 }

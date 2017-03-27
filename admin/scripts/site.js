@@ -1,28 +1,62 @@
 var app = angular.module('app', ['textAngular']);
 
 
-app.controller('MainCtrl', function ($scope,$http,$timeout,textAngularManager) {
+app.controller('MainCtrl', ['$scope','$http','$timeout','textAngularManager','$location', function ($scope,$http,$timeout,textAngularManager,$location) {
 
     $scope.init =function(){
       $scope.urlToApi = "api.php";
       $scope.fetchDictionary();
-      $scope.fetchTours();
+      $scope.fetchEditableTours();
       $scope.fetchLanguages();
       $scope.fetchAbout();
       $scope.fetchContact();
+      $scope.fetchPictures();
+
+
+      var urlstring = $location.absUrl();
+      if(urlstring.match("success") != undefined)
+      {
+        $scope.displayUploadPictures = true;
+        var parameters = urlstring.split("?")[1].split("&");
+        if(parameters[0].substring(8,parameters[0].length) == "true"){
+          $scope.UploadSuccessMsg = "Picture has been uploaded";
+
+        }
+        else
+        {
+          $scope.UploadFailedMsg = parameters[1].substring(4,parameters[1].length);
+        }
+      }
     }
 
-    $scope.fetchTours = function()
+    $scope.fetchEditableTours = function()
     {
-        $http({
-            method: "GET",
-            url:   $scope.urlToApi,
-            params: {
-                action : "get_tours"
-            }
-        }).then(function(response) {
-              $scope.tours = response.data;
-          });
+      $http({
+          method: "GET",
+          url: $scope.urlToApi,
+          params: {
+              action : "get_editable_tours"
+          }
+      }).then(function(response) {
+            $scope.tours= response.data;
+        });
+
+    }
+
+    $scope.selectedTour = function(id)
+    {
+      $http({
+          method: "GET",
+          url: $scope.urlToApi,
+          params: {
+              action : "get_selected_tour",
+              tourid: id
+          }
+      }).then(function(response) {
+            $scope.selectedTour= response.data;
+            $scope.showEditTourSection = true;
+        });
+
 
     }
 
@@ -69,7 +103,7 @@ app.controller('MainCtrl', function ($scope,$http,$timeout,textAngularManager) {
         }).then(function(response) {
 
               $scope.about = response.data;
-              console.log($scope.about);
+
 
           });
     }
@@ -90,10 +124,26 @@ app.controller('MainCtrl', function ($scope,$http,$timeout,textAngularManager) {
           });
     }
 
+    $scope.fetchPictures = function()
+    {
+        $http({
+            method: "GET",
+            url: $scope.urlToApi,
+            params: {
+                action : "get_pictures"
+            }
+        }).then(function(response) {
+
+              $scope.uploadedPictures = response.data;
+
+
+          });
+    }
+
     $scope.editTranslation = function()
     {
-        $scope.displayTranslation = true;
-          $scope.displayTextEditorSection = false;
+      $(".editable-sections").hide();
+        $("#translation").show();
     }
 
     $scope.changeTranslationItem = function(item)
@@ -115,11 +165,24 @@ app.controller('MainCtrl', function ($scope,$http,$timeout,textAngularManager) {
         });
     }
 
+    $scope.editTours = function()
+    {
+      $scope.showEditTourSection = false;
+      $(".editable-sections").hide();
+      $("#edit-tour").show();
+
+    }
+    $scope.uploadPictures = function()
+    {
+          $(".editable-sections").hide();
+            $("#upload-pictures").show();
+    }
+
     $scope.editText = function(type)
     {
-        $scope.sectiontoedit = type;
-        $scope.displayTextEditorSection = true;
-        $scope.displayTranslation = false;
+      $(".editable-sections").hide();
+      $("#text-editor").show();
+
 
         switch(type){
             case "About":
@@ -131,6 +194,46 @@ app.controller('MainCtrl', function ($scope,$http,$timeout,textAngularManager) {
            $scope.list = $scope.contact;
            break;
         }
+    }
+
+    $scope.saveTour = function()
+    {
+
+        var tour = $scope.selectedTour[0];
+        $http({
+            method: "GET",
+            url: $scope.urlToApi,
+            params: {
+                action : "save_tour",
+                id: tour.TourId,
+                duration: tour.Duration,
+                price: tour.Price,
+                img: tour.Img
+            }
+        }).then(function(response) {
+
+              $.each($scope.selectedTour, function(index,item) {
+                $http({
+                    method: "GET",
+                    url: $scope.urlToApi,
+                    params: {
+                        action : "save_tour_text",
+                        id: item.Id,
+                        title: item.Title,
+                        longdescription: item.LongDescription,
+                        shortdescription: item.ShortDescription
+                    }
+                }).then(function(response) {
+                        $( "body" ).scrollTop( 0 );
+                        $scope.displayMsg = true;
+                        $timeout(function() { $scope.displayMsg = false;},5000);
+                });
+
+
+              });
+          });
+
+
     }
 
     $scope.changeEditLanguage = function(languageid,list)
@@ -180,4 +283,4 @@ app.controller('MainCtrl', function ($scope,$http,$timeout,textAngularManager) {
             $scope.versionNumber = $scope.version.substring(1);
             $scope.disabled = false;
         }
-});
+}]);

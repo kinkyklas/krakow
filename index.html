@@ -29,29 +29,37 @@
 
         </section>
     </header>
-    <div id="bg">
+    <div id="bg"  ng-show="!showDetailedTour">
 
         <h1>
             {{translation.Headline}}
         </h1>
     </div>
 
-    <section id="container">
+    <section id="tour-details" ng-show="showDetailedTour">
+        <div>
+          <textarea readonly>{{tourDetailsTexts.LongDescription}}</textarea>
+        </div>
+    </section>
+    <section id="container" ng-show="!showDetailedTour">
+
         <section id="content">
             <section id="tours">
                 <h2 class="h2">{{translation.Tours}}</h2>
 
                 <div ng-repeat="tour in tours" class="tour-container">
                     <div class="tour-img">
-                        <img src="content/imgs/tours/{{tour.Img}}" ng-click="zoomImg(this)" />
+                        <img src="content/imgs/uploads/{{tour.Img}}" ng-click="zoomImg(this)" />
                         <p class="tour-price">{{tour.Price}}:-</p>
                     </div>
                       <div ng-repeat="item in tour.Languages | filter: filterOnLanguageId">
                         <p>{{item.Title}} <span class="tour-hours">{{tour.Duration}} hrs</span></p>
                         <p>{{item.ShortDescription}}</p>
+
+                          <a href="#" ng-click="showDetails(item, tour)">{{translation.Details}}....</a>
                       </div>
 
-                    <a href="#">details...</a>
+
 
 
                 </div>
@@ -68,7 +76,7 @@
                       <div ta-bind ng-model="contactText"></div>
                 </div>
                 <div id="copyright">
-                    copyright @ 2017 Salsiccia design
+                    copyright @ 2017 jumpincracow.com
                 </div>
             </footer>
 
