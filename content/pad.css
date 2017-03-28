@@ -1,0 +1,19 @@
+@media (max-width: 1250px) {
+  #content section
+  {
+    width:800px;
+  }
+
+  #desktop-menu div
+  {
+    width:520px;
+  }
+  #desktop-menu{
+    width:98%;
+  }
+
+  #desktop-menu a
+  {
+    padding: 15px 1px 15px 1px;
+  }
+}

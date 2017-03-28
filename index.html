@@ -9,12 +9,14 @@
     <link href="content/site.css" rel="stylesheet">
     <script type="text/javascript" src="scripts/jquery-1.10.2.min.js"></script>
        <link rel="stylesheet" href="content/textAngular.css" type="text/css">
+        <link rel="stylesheet" href="content/pad.css" type="text/css">
+       <link rel="stylesheet" href="content/mobile.css" type="text/css">
     <script type="text/javascript" src="scripts/angular.min.js"></script>
     <title>Guía de Cracovia</title>
 </head>
 <body ng-controller="MainCtrl" ng-init="init()">
     <header>
-        <section id="header_menu">
+        <section id="desktop-menu">
             <div>
                WWW.JUMPINCRACOW.COM  <span> +48 509 245 404</span>
 
@@ -26,6 +28,31 @@
             <a href="#" aria-data="contact">{{translation.Contact}}</a>
             <a href="#" aria-data="about">{{translation.About}}</a>
             <a href="#" aria-data="tours">{{translation.Tours}}</a>
+
+        </section>
+
+        <section id="mobile-menu">
+            <div>
+              <p id="mobile-menu-icon" ng-click="dispMobileNav = !dispMobileNav"></p>
+               WWW.JUMPINCRACOW.COM
+
+            </div>
+            <div id="mobile-menu-content" ng-class="{'mobile-display-nav': dispMobileNav}">
+              <div><a href="#" aria-data="contact">{{translation.Contact}}</a></div>
+              <div><a href="#" aria-data="about">{{translation.About}}</a></div>
+              <div><a href="#" aria-data="tours">{{translation.Tours}}</a></div>
+              <div><span> +48 509 245 404</span></div>
+              <div>
+                <div>
+                  <p ng-repeat="lang in languages" ng-class="{'selected' : lang.IsSelected == '1'}" ng-click="changeLanguage(lang)">
+                    <img src="content/imgs/{{lang.FlagImg}}" />
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            </div>
+
 
         </section>
     </header>
@@ -45,7 +72,7 @@
 
           <textarea readonly>{{tourDetailsTexts.LongDescription}}</textarea>
 
-          <a href="#" ng-click="showDetailedTour = false">Back</a>
+          <a href="#" ng-click="showDetailedTour = false">{{translation.Back}}</a>
         </div>
     </section>
     <section id="container" ng-show="!showDetailedTour">
@@ -73,9 +100,9 @@
             </section>
             <section id="about">
                 <h2 class="h2">{{translation.About}}</h2>
-                <div ng-model="textToEdit"></div>
+
                 <div id="about-img"><img src="content/imgs/kinga.png"></div>
-                  <div ta-bind ng-model="aboutText"></div>
+                <div ta-bind ng-model="aboutText" id="about-info"></div>
             </section>
             <footer>
                 <div id="contact">

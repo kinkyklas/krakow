@@ -73,10 +73,9 @@
         <div ng-show="!showEditTourSection">
         <h2>Select tour to edit</h2>
         <div ng-repeat="tour in tours">
-            <a href="#" ng-click="selectedTour(tour.TourId)">{{tour.Title}}</a>
+            <a href="#" ng-click="$parent.selectTour(tour.TourId)">{{tour.Title}}</a>
         </div>
-
-        <button>Create new tour</button>
+        <button ng-click="createNewTour()">Create new tour</button>
       </div>
       <div ng-show="showEditTourSection">
         <h2>{{selectedTour[0].Title}}</h2>
@@ -116,8 +115,6 @@
         <br/><br/>
         <button ng-click="saveTour()">Save tour</button>
       </div>
-
-
     </section>
 
     <section id="upload-pictures" class="editable-sections">

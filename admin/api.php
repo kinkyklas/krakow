@@ -21,7 +21,7 @@ if (isset($_GET["action"]))
           break;
         case "get_selected_tour":
           $id = mysqli_real_escape_string($db,$_GET["tourid"]);
-            $sqlstring = "SELECT * FROM `tbl_tours` inner join tbl_tours_text on tbl_tours_text.TourId = tbl_tours.Id inner join tbl_languages on tbl_tours_text.LanguageId = tbl_languages.Id where tbl_tours.Id = ". $id;
+            $sqlstring = "SELECT tbl_tours.*, tbl_tours_text.*, tbl_languages.Language, tbl_languages.FlagImg FROM `tbl_tours` inner join tbl_tours_text on tbl_tours_text.TourId = tbl_tours.Id inner join tbl_languages on tbl_tours_text.LanguageId = tbl_languages.Id where tbl_tours.Id = ". $id;
             returnJsonData($sqlstring,$conn);
           break;
       case "get_languages":
@@ -70,6 +70,7 @@ if (isset($_GET["action"]))
             $sqlstring = "UPDATE tbl_tours SET Price ='".$price."',Duration ='".$duration."',Img ='".$img."' WHERE Id =".$id;
             updateData($sqlstring,$conn);
             break;
+
         case "save_tour_text":
             $id = mysqli_real_escape_string($db,$_GET["id"]);
             $shortdescription= mysqli_real_escape_string($db,$_GET["shortdescription"]);
@@ -78,6 +79,24 @@ if (isset($_GET["action"]))
             $sqlstring = "UPDATE tbl_tours_text SET ShortDescription ='".$shortdescription."',LongDescription ='".$longdescription."',Title ='".$title."' WHERE Id =".$id;
             updateData($sqlstring,$conn);
             break;
+
+        case "insert_tour":
+            $sqlstring = "Insert INTO tbl_tours(price, duration,img) VALUES(0,'0:00','')";
+            updateData($sqlstring,$conn);
+            $sqlstring = "SELECT * FROM tbl_tours ORDER BY id DESC LIMIT 1";
+            returnJsonData($sqlstring,$conn);
+
+            break;
+        case "insert_tour_texts":
+            $languageid= mysqli_real_escape_string($db,$_GET["languageid"]);
+            $tourid = mysqli_real_escape_string($db,$_GET["tourid"]);
+            $sqlstring = "Insert INTO tbl_tours_text(ShortDescription, LongDescription,Title,LanguageId,TourId) VALUES('enter short description','enter long description','enter title',".$languageid.",".$tourid.")";
+            updateData($sqlstring,$conn);
+            $sqlstring = "SELECT * FROM tbl_tours ORDER BY id DESC LIMIT 1";
+            returnJsonData($sqlstring,$conn);
+
+            break;
+
     }
 
     $conn->close();

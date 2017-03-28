@@ -32,7 +32,7 @@ header {
 
 }
 
-#header_menu {
+#desktop-menu {
 
     font-weight:bold;
     font-size: 11pt;
@@ -42,7 +42,7 @@ header {
 
 }
 
-#header_menu div {
+#desktop-menu div {
     float:left;
    color: #d45d2f;
    width:550px;
@@ -50,7 +50,7 @@ header {
 
 }
 
-#header_menu div p {
+#desktop-menu div p {
     float:right;
     margin:0px 10px 0px 0px;
     opacity:0.2;
@@ -58,13 +58,13 @@ header {
 
 }
 
-#header_menu div p img {
+#desktop-menu div p img {
     border-radius:2px;
     border:1px solid lightgray;
 
 }
 
-#header_menu div span {
+#desktop-menu div span {
     color:#5E5E5E;
     background-image:url('imgs/call.png');
     background-repeat:no-repeat;
@@ -74,7 +74,7 @@ header {
 }
 
 
-#header_menu .selected {
+#desktop-menu .selected {
 
     opacity:1.0;
 
@@ -82,7 +82,7 @@ header {
 
 
 
-#header_menu a {
+#desktop-menu a {
     float:right;
     border-left: 1px solid lightgray;
     min-width:80px;
@@ -94,12 +94,12 @@ header {
 }
 
 
-#header_menu a:nth-child(1) {
+#desktop-menu a:nth-child(1) {
     border-right: 1px solid #f6f6f6;
 }
 
 
-    #header_menu a:hover {
+    #desktop-menu a:hover {
         color:#d45d2f;
     }
 
@@ -136,7 +136,7 @@ header {
     position:absolute;
     width:100%;
     height:100%;
-    overflow-x:no-display;
+    overflow-x:hidden;
     z-index:1;
     top:0px;
     overflow-y:scroll;
@@ -252,6 +252,7 @@ header {
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;
+    height:600px;
 }
 
 #tour-details
@@ -315,4 +316,10 @@ footer {
     padding-top:25px;
     font-size:10pt;
 
+}
+
+
+#mobile-menu
+{
+  display:none;
 }
