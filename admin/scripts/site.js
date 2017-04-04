@@ -1,7 +1,7 @@
 var app = angular.module('app', ['textAngular']);
 
 
-app.controller('MainCtrl', ['$scope','$http','$timeout','textAngularManager','$location', function ($scope,$http,$timeout,textAngularManager,$location) {
+app.controller('MainCtrl', ['$scope','$http','$timeout','textAngularManager','$location','$window', function ($scope,$http,$timeout,textAngularManager,$location,$window) {
 
     $scope.init =function(){
       $scope.urlToApi = "api.php";
@@ -24,7 +24,18 @@ app.controller('MainCtrl', ['$scope','$http','$timeout','textAngularManager','$l
         }
         else
         {
-          $scope.UploadFailedMsg = parameters[1].substring(4,parameters[1].length);
+          $("#upload-pictures").show();
+          var mess = parameters[1].substring(4,parameters[1].length);
+          $scope.UploadFailedMsg = mess.replace(/%20/g, " ");
+        }
+      }
+
+      if(urlstring.match("action") != undefined)
+      {
+        var parameters = urlstring.split("?")[1].split("&");
+        if(parameters[0].substring(7,parameters[0].length) == "newtour"){
+          $scope.newTourAdded = true;
+          $("#edit-tour").show();
         }
       }
     }
@@ -110,6 +121,26 @@ app.controller('MainCtrl', ['$scope','$http','$timeout','textAngularManager','$l
           });
     }
 
+    $scope.removePicture = function(picture)
+    {
+
+
+        $http({
+            method: "GET",
+            url: $scope.urlToApi,
+            params: {
+                action : "remove_picture",
+                filename : picture.FileName,
+                id: picture.Id
+            }
+        }).then(function(response) {
+
+              $scope.UploadSuccessMsg = response.data;
+
+              $scope.fetchPictures();
+          });
+    }
+
     $scope.editTranslation = function()
     {
       $(".editable-sections").hide();
@@ -173,6 +204,7 @@ app.controller('MainCtrl', ['$scope','$http','$timeout','textAngularManager','$l
     $scope.editTours = function()
     {
       $scope.showEditTourSection = false;
+      $scope.editTourSelectedLanguage = "1";
       $scope.selectedTour = [];
       $(".editable-sections").hide();
       $("#edit-tour").show();
@@ -222,10 +254,43 @@ app.controller('MainCtrl', ['$scope','$http','$timeout','textAngularManager','$l
 
     }
 
+    $scope.removeTour = function(id)
+    {
+
+      $http({
+          method: "GET",
+          url: $scope.urlToApi,
+          params: {
+              action : "remove_tour",
+              id: id
+
+          }
+      }).then(function(response) {
+            $scope.fetchEditableTours();
+
+        });
+
+    }
+
     $scope.uploadPictures = function()
     {
           $(".editable-sections").hide();
             $("#upload-pictures").show();
+    }
+
+    $scope.useAsAboutImg = function(picture)
+    {
+      
+
+      $http({
+          method: "GET",
+          url: $scope.urlToApi,
+          params: { id: picture.Id,
+                    action: "update_about_img"},
+      }).then(function(response) {
+            $scope.fetchPictures();
+
+        });
     }
 
     $scope.editText = function(type)
@@ -233,13 +298,14 @@ app.controller('MainCtrl', ['$scope','$http','$timeout','textAngularManager','$l
       $(".editable-sections").hide();
       $("#text-editor").show();
 
-
         switch(type){
             case "About":
+                $scope.sectiontoedit = "About";
                 $scope.changeEditLanguage("1", $scope.about);
                 $scope.list = $scope.about;
            break;
            case "Contact":
+           $scope.sectiontoedit = "Contact";
            $scope.changeEditLanguage("1", $scope.contact);
            $scope.list = $scope.contact;
            break;
@@ -270,8 +336,9 @@ app.controller('MainCtrl', ['$scope','$http','$timeout','textAngularManager','$l
               }).then(function(response) {
 
                     if(index == ($scope.languages.length-1)) {
-                        $scope.fetchDictionary();
-                        $scope.showEditTourSection = true;
+                        $location.search('action','newtour');
+                        $window.location.reload();
+                        //$window.location.reload();
                     }
                 });
             });
@@ -281,13 +348,17 @@ app.controller('MainCtrl', ['$scope','$http','$timeout','textAngularManager','$l
 
     $scope.changeEditLanguage = function(languageid,list)
     {
+
       $scope.itemToEdit =  _.findWhere(list, {LanguageId : languageid});
       $scope.itemToEdit.Language = _.findWhere($scope.languages, {Id : languageid});
        $scope.textToEdit = $scope.itemToEdit.Text;
+       console.log($scope.textToEdit);
     }
 
     $scope.updateItemToEdit = function()
     {
+
+
         switch($scope.sectiontoedit) {
           case "About":
             var parameters = {

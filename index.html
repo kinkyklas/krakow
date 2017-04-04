@@ -6,41 +6,39 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:700|Roboto|Open+Sans:300" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Parisienne" rel="stylesheet">
     <link href="content/site.css" rel="stylesheet">
     <script type="text/javascript" src="scripts/jquery-1.10.2.min.js"></script>
        <link rel="stylesheet" href="content/textAngular.css" type="text/css">
         <link rel="stylesheet" href="content/pad.css" type="text/css">
        <link rel="stylesheet" href="content/mobile.css" type="text/css">
     <script type="text/javascript" src="scripts/angular.min.js"></script>
-    <title>Guía de Cracovia</title>
+    <title>JUMPINCRACOW</title>
 </head>
 <body ng-controller="MainCtrl" ng-init="init()">
     <header>
         <section id="desktop-menu">
             <div>
-               WWW.JUMPINCRACOW.COM  <span> +48 509 245 404</span>
-
+               JUMPINCRACOW.COM  <span> +48 509 245 404</span>
                 <p ng-repeat="lang in languages" ng-class="{'selected' : lang.IsSelected == '1'}" ng-click="changeLanguage(lang)">
                     <img src="content/imgs/{{lang.FlagImg}}" />
                 </p>
-
             </div>
             <a href="#" aria-data="contact">{{translation.Contact}}</a>
             <a href="#" aria-data="about">{{translation.About}}</a>
             <a href="#" aria-data="tours">{{translation.Tours}}</a>
-
         </section>
 
         <section id="mobile-menu">
-            <div>
+            <div id="mobile-menu-top">
               <p id="mobile-menu-icon" ng-click="dispMobileNav = !dispMobileNav"></p>
-               WWW.JUMPINCRACOW.COM
+               JUMPINCRACOW.COM
 
             </div>
             <div id="mobile-menu-content" ng-class="{'mobile-display-nav': dispMobileNav}">
-              <div><a href="#" aria-data="contact">{{translation.Contact}}</a></div>
-              <div><a href="#" aria-data="about">{{translation.About}}</a></div>
-              <div><a href="#" aria-data="tours">{{translation.Tours}}</a></div>
+              <div><a href="#" aria-data="tours" ng-click="dispMobileNav = false">{{translation.Tours}}</a></div>
+                <div><a href="#" aria-data="about" ng-click="dispMobileNav = false">{{translation.About}}</a></div>
+                <div><a href="#" aria-data="contact" ng-click="dispMobileNav = false">{{translation.Contact}}</a></div>
               <div><span> +48 509 245 404</span></div>
               <div>
                 <div>
@@ -56,7 +54,7 @@
 
         </section>
     </header>
-    <div id="bg"  ng-show="!showDetailedTour">
+    <div id="bg">
 
         <h1>
           {{translation.Headline}}
@@ -64,44 +62,47 @@
 
     </div>
 
-    <section id="tour-details" ng-show="showDetailedTour">
-        <div>
-          <h2>{{tourDetailsTexts.Title}}</h2>
-          Price: {{tourDetailsInfo.Price}} zloty  Duration: {{tourDetailsInfo.Duration}} hrs
-          <hr />
 
-          <textarea readonly>{{tourDetailsTexts.LongDescription}}</textarea>
+    <div id="tour-details" ng-show="showDetailedTour">
 
-          <a href="#" ng-click="showDetailedTour = false">{{translation.Back}}</a>
+          <div id="tour-details-header" style="background-image: url('content/imgs/uploads/{{tourDetailsInfo.Img}}')">
+            <p>{{(tourDetailsInfo.Languages | filter: {LanguageId : languageId})[0].ShortDescription}}</p>
+          <h2>{{(tourDetailsInfo.Languages | filter: {LanguageId : languageId})[0].Title}}</h2>
+
         </div>
-    </section>
-    <section id="container" ng-show="!showDetailedTour">
+        <div id="tour-details-content">
+          {{translation.Price}}: {{tourDetailsInfo.Price}}  {{translation.Duration}}: {{tourDetailsInfo.Duration}}
+          <hr />
+            <div ta-bind ng-model="(tourDetailsInfo.Languages | filter: {LanguageId : languageId})[0].LongDescription"></div>
 
-        <section id="content">
+          <a href="#" ng-click="backFromDetails()">{{translation.Back}}</a>
+        </div>
+    </div>
+
+
+
+        <section id="content" ng-show="!showDetailedTour">
             <section id="tours">
                 <h2 class="h2">{{translation.Tours}}</h2>
 
-                <div ng-repeat="tour in tours" class="tour-container">
+                <div ng-repeat="tour in tours" class="tour-container" ng-show="!showDetailedTour">
                     <div class="tour-img">
                         <img src="content/imgs/uploads/{{tour.Img}}" ng-click="zoomImg(this)" />
-                        <p class="tour-price">{{tour.Price}}:-</p>
+                        <p class="tour-price">{{tour.Price}}</p>
                     </div>
                       <div ng-repeat="item in tour.Languages | filter: filterOnLanguageId">
-                        <p>{{item.Title}} <span class="tour-hours">{{tour.Duration}} hrs</span></p>
+                        <p>{{item.Title}} <span class="tour-hours">{{tour.Duration}} </span></p>
                         <p>{{item.ShortDescription}}</p>
 
-                          <a href="#" ng-click="showDetails(item, tour)">{{translation.Details}}....</a>
+                          <a ng-click="showDetails(tour)">{{translation.Details}}....</a>
                       </div>
-
-
-
-
                 </div>
+
             </section>
             <section id="about">
                 <h2 class="h2">{{translation.About}}</h2>
 
-                <div id="about-img"><img src="content/imgs/kinga.png"></div>
+                <div id="about-img"><img src="content/imgs/uploads/{{aboutImg[0].FileName}}"></div>
                 <div ta-bind ng-model="aboutText" id="about-info"></div>
             </section>
             <footer>
@@ -115,7 +116,7 @@
             </footer>
 
         </section>
-    </section>
+
     <script src='scripts/textAngular-rangy.min.js'></script>
     <script src='scripts/textAngular-sanitize.min.js'></script>
     <script src='scripts/textAngular.min.js'></script>

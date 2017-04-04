@@ -8,7 +8,7 @@ $check;
 if(isset($_POST["submit"])) {
     $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
     if($check !== false) {
-        echo "File is an image - " . $check["mime"] . ".";
+        //echo "File is an image - " . $check["mime"] . ".";
         $uploadOk = 1;
     } else {
         echo "File is not an image.";
@@ -44,7 +44,7 @@ if ($uploadOk == 0) {
         $conn = mysqli_connect(DB_SERVER,DB_USERNAME,DB_PASSWORD,DB_DATABASE);
 
         $conn->set_charset("utf8");
-        $sql = "INSERT into tbl_uploads (FileName,Width,Height) values ('".basename( $_FILES["fileToUpload"]["name"])."',$check[0],$check[1])";
+        $sql = "INSERT into tbl_uploads (FileName,Width,Height,AboutImg) values ('".basename( $_FILES["fileToUpload"]["name"])."',$check[0],$check[1],0)";
         $result = mysqli_query($conn, $sql);
         header('Location: index.php?success=true');
 

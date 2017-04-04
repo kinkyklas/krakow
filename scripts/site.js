@@ -1,27 +1,19 @@
-$(document).ready()
-{
-    $("#header_menu a").each(function () {
-            var name = $(this).attr("aria-data");
-            $(this).on("click", function () {
-                //$("#container").scrollTop(1000);
-                console.log($("#" + name).offset().top);
-                //console.log($('#container').scrollTop());
-                $('#container').animate({
-                    scrollTop: $("#" + name).offset().top-100
-                   // "margin-top": "10px"
-                }, 1000);
-            });
-        });
-
-
-}
-
-
 var app = angular.module('app', ['textAngular']);
 
 app.controller('MainCtrl', function ($scope,$http,$interval) {
 
     $scope.init =function(){
+
+      $("#desktop-menu a, #mobile-menu a").each(function () {
+              var name = $(this).attr("aria-data");
+              $(this).on("click", function () {
+                    $scope.showDetailedTour = false;
+                  $('html, body').animate({
+                      scrollTop: $("#" + name).offset().top - 100
+                  }, 1000);
+              });
+          });
+
       $scope.urlToApi = "api.php";
       $scope.allFetched = 0;
       $scope.fetchTours();
@@ -29,6 +21,7 @@ app.controller('MainCtrl', function ($scope,$http,$interval) {
       $scope.fetchStuff("get_dictionary", 'translations');
       $scope.fetchStuff("get_contact", 'contact');
       $scope.fetchStuff("get_languages", 'languages');
+      $scope.fetchStuff("get_about_img", 'aboutImg');
     }
 
     $scope.$watch('allFetched', function() {
@@ -38,12 +31,26 @@ app.controller('MainCtrl', function ($scope,$http,$interval) {
       }
     });
 
-    $scope.showDetails = function(item,tour)
+    $scope.showDetails = function(tour)
     {
         $scope.showDetailedTour = true;
-        $scope.tourDetailsTexts = item;
+        //$scope.tourDetailsTexts = item;
         $scope.tourDetailsInfo = tour;
-        $("#tour-details").css("background-image", "url('content/imgs/uploads/"+tour.Img+"')");
+        $scope.prevScrollPosition = $('body').scrollTop();
+        $('html, body').animate({
+            scrollTop: '0px'
+        }, 200);
+
+
+    }
+
+    $scope.backFromDetails = function()
+    {
+
+        $scope.showDetailedTour = false;
+        $('html, body').animate({
+            scrollTop: $scope.prevScrollPosition
+        }, 200);
 
     }
 

@@ -13,9 +13,15 @@
       font-weight:bold;
       font-size: 11pt;
       padding-top:8px;
+
     }
 
-    #mobile-menu div:nth-child(1)
+    #mobile-menu a
+    {
+      color:black;
+    }
+
+    #mobile-menu-top
     {
        color: #d45d2f;
        padding:10px;
@@ -162,9 +168,27 @@
         position:relative;
     }
 
-    #tour-details
+    #tour-details-header
     {
-      min-height: 700px;
+      padding-top:200px;
+    }
+
+    #tour-details-header h2
+    {
+      padding:15px;
+      color:white;
+      font-size:20pt;
+       text-shadow:2px 1px 1px #5E5E5E;
+       background-color: rgba(0,0,0,0.4)
+    }
+
+    #tour-details-header p
+    {
+      top:50px;
+      right:10px;
+      font-size:18pt;
+      padding:7px;
+      border-radius:3px;
     }
 
       /*------about -----------*/

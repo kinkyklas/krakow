@@ -18,7 +18,7 @@ if (isset($_GET["action"]))
           $sqlstring = "SELECT * FROM tbl_tours inner join tbl_tours_text on tbl_tours.id = tbl_tours_text.TourId";
         break;
       case "get_languages":
-          $sqlstring = "SELECT * FROM tbl_languages";
+          $sqlstring = "SELECT * FROM tbl_languages where isenabled = 1";
         break;
       case "get_dictionary":
           $sqlstring = "SELECT * FROM tbl_translations";
@@ -28,6 +28,9 @@ if (isset($_GET["action"]))
           break;
         case "get_contact":
           $sqlstring = "SELECT * FROM tbl_contact";
+            break;
+        case "get_about_img":
+          $sqlstring = "SELECT FileName FROM tbl_uploads Where AboutImg = 1";
             break;
     }
 

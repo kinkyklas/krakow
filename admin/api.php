@@ -11,10 +11,10 @@ if (isset($_GET["action"]))
 
     switch ($action)
     {
-      case "get_tours":
+        case "get_tours":
           $sqlstring = "SELECT * FROM tbl_tours";
           returnJsonData($sqlstring,$conn);
-        break;
+          break;
         case "get_editable_tours":
             $sqlstring = "SELECT * FROM tbl_tours inner join tbl_tours_text on tbl_tours_text.TourId = tbl_tours.Id where tbl_tours_text.LanguageId = 4";
             returnJsonData($sqlstring,$conn);
@@ -62,6 +62,13 @@ if (isset($_GET["action"]))
             $sqlstring = "UPDATE tbl_contact SET Text ='".$value."' WHERE Id =".$id;
             updateData($sqlstring,$conn);
             break;
+        case "update_about_img":
+            $id = mysqli_real_escape_string($db,$_GET["id"]);
+            $sqlstring = "UPDATE tbl_uploads SET AboutImg = 0";
+            updateData($sqlstring,$conn);
+            $sqlstring = "UPDATE tbl_uploads SET AboutImg = 1 WHERE Id =".$id;
+            updateData($sqlstring,$conn);
+            break;
         case "save_tour":
             $id = mysqli_real_escape_string($db,$_GET["id"]);
             $duration= mysqli_real_escape_string($db,$_GET["duration"]);
@@ -90,13 +97,35 @@ if (isset($_GET["action"]))
         case "insert_tour_texts":
             $languageid= mysqli_real_escape_string($db,$_GET["languageid"]);
             $tourid = mysqli_real_escape_string($db,$_GET["tourid"]);
-            $sqlstring = "Insert INTO tbl_tours_text(ShortDescription, LongDescription,Title,LanguageId,TourId) VALUES('enter short description','enter long description','enter title',".$languageid.",".$tourid.")";
+            $sqlstring = "Insert INTO tbl_tours_text(ShortDescription, LongDescription,Title,LanguageId,TourId) VALUES('enter short description','enter long description','click to edit new tour',".$languageid.",".$tourid.")";
             updateData($sqlstring,$conn);
             $sqlstring = "SELECT * FROM tbl_tours ORDER BY id DESC LIMIT 1";
             returnJsonData($sqlstring,$conn);
 
             break;
+        case "remove_tour":
+            $id= mysqli_real_escape_string($db,$_GET["id"]);
+            $sqlstring = "DELETE FROM tbl_tours WHERE id = ".$id;
+            updateData($sqlstring,$conn);
+            $sqlstring = "DELETE FROM tbl_tours_text WHERE tourid = ".$id;
+            updateData($sqlstring,$conn);
+            break;
+        case "remove_picture":
+            $target_dir = "../content/imgs/uploads/";
+            $filename = $target_dir."".$_GET["filename"];
+            $id= mysqli_real_escape_string($db,$_GET["id"]);
 
+            if (!unlink($filename))
+            {
+                exit(json_encode("Error deleting ".$filename));
+            }
+          else
+            {
+              $sqlstring = "DELETE FROM tbl_uploads WHERE Id = ".$id;
+              updateData($sqlstring,$conn);
+              exit(json_encode("Deleted ".$_GET["filename"]));
+            }
+            break;
     }
 
     $conn->close();

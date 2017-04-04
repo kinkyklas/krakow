@@ -4,7 +4,7 @@ body
     margin:0px;
     padding:0px;
    color: #5E5E5E;
-   overflow: hidden;
+   overflow-y: scroll;
 }
 
 a{
@@ -22,11 +22,11 @@ header {
 
     height:50px;
     border-bottom:1px solid lightgray;
-    position:absolute;
-    z-index:2;
+      position:fixed;
+    z-index:10;
     top:0px;
     left:0px;
-    right:17px;
+    right:0px;
     background-color:white;
 
 
@@ -112,7 +112,9 @@ header {
     margin:0px;
     color:white;
    font-weight:bold;
-     text-shadow:2px 1px 1px #5E5E5E;
+   text-shadow:2px 1px 1px #5E5E5E;
+   position: fixed;
+   top:0px;
 }
 
 #bg h1 {
@@ -123,8 +125,6 @@ header {
     line-height:103px;
 
 
-
-
 }
 
 #bg h3
@@ -132,23 +132,15 @@ header {
   font-size:30pt;
 }
 
-#container {
-    position:absolute;
-    width:100%;
-    height:100%;
-    overflow-x:hidden;
-    z-index:1;
-    top:0px;
-    overflow-y:scroll;
 
-}
 
 #content {
     margin-top:700px;
     padding-top:50px;
-
     width:100%;
     background-color:#fafafa;
+    z-index:5;
+    position:relative;
 
 }
 
@@ -205,6 +197,7 @@ header {
     color:black;
     text-decoration:none;
     font-size:10pt;
+    cursor: pointer;
 }
 
 .tour-container a:hover {
@@ -232,39 +225,66 @@ header {
     font-weight:700;
 }
 
-#tour-details div{
-  width:80%;
-  margin:auto;
-  background-color: white;
-  overflow: auto;
-  padding:20px;
+
+
+#tour-details
+{
+  position:relative;
+  z-index:3;
+  height:1200px;
+  background-color:white;
 }
 
 #tour-details textarea
 {
   resize:none;
-  width:100%;
+  width:90%;
   font-family: 'Open Sans', sans-serif;
   border: none;
     overflow: auto;
     outline: none;
-
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;
-    height:600px;
+    background-color:rgba(255,255,255,0);
 }
 
-#tour-details
+#tour-details-header
 {
-    border:1px solid red;
-    width:100%;
-    padding-top: 100px;
-    background-size:cover;
-
-    min-height: 1000px;
+  background-position: center;
+  padding:300px 00px 00px 00px;
 }
 
+#tour-details-header h2
+{
+  padding:20px;
+  color:white;
+  font-size:40pt;
+   text-shadow:2px 1px 1px #5E5E5E;
+   background-color: rgba(0,0,0,0.4)
+}
+
+#tour-details-header p
+{
+  position:absolute;
+  top:50px;
+  right:90px;
+  color:white;
+  font-size:35pt;
+  text-shadow:2px 1px 1px #5E5E5E;
+  background-color:rgba(212,93,47,0.4);
+  padding:20px;
+  font-family: 'Parisienne', cursive;
+  border-radius:5px;
+}
+
+#tour-details-content
+{
+  width:80%;
+  padding-top:20px;
+  margin:auto;
+
+}
 
 #about-img
 {
@@ -272,7 +292,7 @@ header {
   width:300px;
   padding:20px;
   background-color:white;
-  border:1px solid lightgray;
+
   border-radius:4px;
 }
 

@@ -27,7 +27,7 @@
         <a href="#" ng-click="editText('About')">About</a> |
         <a href="#" ng-click="editTranslation()">Translation</a> |
         <a href="#" ng-click="editTours()">Tours</a> |
-        <a href="#" ng-click="uploadPictures()">Upload pictures</a>
+        <a href="#" ng-click="uploadPictures()">Handle pictures</a>
       </div>
     </header>
 
@@ -63,40 +63,48 @@
       <div text-angular="text-angular" name="textToEdit" ng-model="textToEdit" ta-disabled='disabled'></div>
 
       <button ng-click="updateItemToEdit()">save</button>
-      <h1>Preview:</h1>
-      <div ta-bind ng-model="textToEdit"></div>
+
+
 
 
     </section>
 
     <section id="edit-tour" class="editable-sections">
-        <div ng-show="!showEditTourSection">
-        <h2>Select tour to edit</h2>
-        <div ng-repeat="tour in tours">
-            <a href="#" ng-click="$parent.selectTour(tour.TourId)">{{tour.Title}}</a>
+        <div ng-show="!showEditTourSection" >
+          <h2>Select tour to edit</h2>
+          <div ng-repeat="tour in tours" class="edit-tour-repeat-list" ng-class="{'edit-tour-new-added':newTourAdded}">
+              <p title="remove tour" ng-click="$parent.removeTour(tour.TourId)">X</p>
+              <a href="#" ng-click="$parent.selectTour(tour.TourId)">{{tour.Title}}</a>
+          </div>
+          <button ng-click="createNewTour()">Create new tour</button>
         </div>
-        <button ng-click="createNewTour()">Create new tour</button>
-      </div>
       <div ng-show="showEditTourSection">
         <h2>{{selectedTour[0].Title}}</h2>
+        <div id="edit-select-language">
+            <div>Selected language: <img src="../content/imgs/{{(languages | filter: {Id : editTourSelectedLanguage})[0].FlagImg}}"></div>
+            <div>change language:</div>
+            <div ng-repeat="language in languages" ng-click="$parent.editTourSelectedLanguage = language.Id"><img src="../content/imgs/{{language.FlagImg}}"></div>
+        </div>
         <h5>Select title</h5>
         <div class="edit-tour-section-part">
-            <div ng-repeat="tour in selectedTour">
-              <img src="../content/imgs/{{tour.FlagImg}}"><input type="text" ng-model="tour.Title"/>
+            <div ng-repeat="tour in selectedTour" ng-show="editTourSelectedLanguage == tour.LanguageId">
+
+            <input type="text" ng-model="tour.Title"/>
             </div>
         </div>
 
         <h5>Select short description</h5>
         <div class="edit-tour-section-part">
-            <div ng-repeat="tour in selectedTour">
-              <img src="../content/imgs/{{tour.FlagImg}}"><input type="text" ng-model="tour.ShortDescription"/>
+            <div ng-repeat="tour in selectedTour" ng-show="editTourSelectedLanguage == tour.LanguageId">
+            <input type="text" ng-model="tour.ShortDescription"/>
             </div>
         </div>
 
         <h5>Select long description</h5>
         <div class="edit-tour-section-part" id="tour-long-description">
-            <div ng-repeat="tour in selectedTour">
-              <img src="../content/imgs/{{tour.FlagImg}}"><br/><textarea ng-model="tour.LongDescription"/></textarea>
+            <div ng-repeat="tour in selectedTour" ng-show="editTourSelectedLanguage == tour.LanguageId">
+
+          <div text-angular="text-angular" ng-model="tour.LongDescription" ta-disabled='disabled'></div>
             </div>
         </div>
 
@@ -121,7 +129,7 @@
 
           <div class="operation-success" ng-show="UploadSuccessMsg.length>0">{{UploadSuccessMsg}}</div>
           <div class="operation-failed" ng-show="UploadFailedMsg.length>0">{{UploadFailedMsg}}</div>
-          <h2>Upload pictures</h2>
+          <h2>Upload picture</h2>
           <div id="upload-pictures-form">
             <form action="upload.php" method="post" enctype="multipart/form-data">
               <h3>Select image to upload:</h3>
@@ -134,7 +142,9 @@
                 <div ng-repeat="picture in uploadedPictures">
                   <img src="../content/imgs/uploads/{{picture.FileName}}"><br />
                   {{picture.FileName}}<br/>
-                  {{picture.Width}}px*{{picture.Height}}px
+                  {{picture.Width}}px*{{picture.Height}}px<br/>
+                  <span ng-click="removePicture(picture)">Remove picture</span><br />
+                  <span ng-click="useAsAboutImg(picture)" ng-class="{'is-about-img': picture.AboutImg == 1}"> Use as about image</span>
                 </div>
           </div>
     </section>
