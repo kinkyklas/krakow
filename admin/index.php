@@ -85,28 +85,29 @@
             <div>change language:</div>
             <div ng-repeat="language in languages" ng-click="$parent.editTourSelectedLanguage = language.Id"><img src="../content/imgs/{{language.FlagImg}}"></div>
         </div>
-        <h5>Select title</h5>
-        <div class="edit-tour-section-part">
-            <div ng-repeat="tour in selectedTour" ng-show="editTourSelectedLanguage == tour.LanguageId">
 
+        <div ng-repeat="tour in selectedTour" ng-show="editTourSelectedLanguage == tour.LanguageId">
+          <h5>Select title</h5>
+          <div class="edit-tour-section-part">
             <input type="text" ng-model="tour.Title"/>
-            </div>
+          </div>
+
+          <h5>Select short description</h5>
+          <div class="edit-tour-section-part">
+              <input type="text" ng-model="tour.ShortDescription"/>
+          </div>
+
+          <h5>Select long description</h5>
+          <div class="edit-tour-section-part" id="tour-long-description">
+            <div text-angular="text-angular" ng-model="tour.LongDescription" ta-disabled='disabled'></div>
+          </div>
+
+          <h5>Select price</h5>
+          <input type="text" ng-model="tour.Price"/>
         </div>
 
-        <h5>Select short description</h5>
-        <div class="edit-tour-section-part">
-            <div ng-repeat="tour in selectedTour" ng-show="editTourSelectedLanguage == tour.LanguageId">
-            <input type="text" ng-model="tour.ShortDescription"/>
-            </div>
-        </div>
-
-        <h5>Select long description</h5>
-        <div class="edit-tour-section-part" id="tour-long-description">
-            <div ng-repeat="tour in selectedTour" ng-show="editTourSelectedLanguage == tour.LanguageId">
-
-          <div text-angular="text-angular" ng-model="tour.LongDescription" ta-disabled='disabled'></div>
-            </div>
-        </div>
+        <h5>Select Duration</h5>
+        <input type="text" ng-model="selectedTour[0].Duration"/>
 
         <h5>Select picture</h5>
         <div id="edit-tour-selected-picture-section">
@@ -114,11 +115,9 @@
               <img src="../content/imgs/uploads/{{picture.FileName}}">
           </div>
         </div>
-        <h5>Select price</h5>
-        <input type="text" ng-model="selectedTour[0].Price"/>
 
-        <h5>Select Duration</h5>
-        <input type="text" ng-model="selectedTour[0].Duration"/>
+
+
 
         <br/><br/>
         <button ng-click="saveTour()">Save tour</button>

@@ -1,18 +1,27 @@
 var app = angular.module('app', ['textAngular']);
 
+app.directive("scroll", function ($window) {
+    return function(scope, element, attrs) {
+        angular.element($window).bind("scroll", function() {
+            scope.dispMobileNav = false;
+            scope.$apply();
+        });
+    };
+});
+
 app.controller('MainCtrl', function ($scope,$http,$interval) {
 
     $scope.init =function(){
 
       $("#desktop-menu a, #mobile-menu a").each(function () {
-              var name = $(this).attr("aria-data");
-              $(this).on("click", function () {
-                    $scope.showDetailedTour = false;
-                  $('html, body').animate({
-                      scrollTop: $("#" + name).offset().top - 100
-                  }, 1000);
-              });
+          var name = $(this).attr("aria-data");
+          $(this).on("click", function () {
+                $scope.showDetailedTour = false;
+              $('html, body').animate({
+                  scrollTop: $("#" + name).offset().top - 100
+              }, 1000);
           });
+      });
 
       $scope.urlToApi = "api.php";
       $scope.allFetched = 0;
@@ -25,7 +34,7 @@ app.controller('MainCtrl', function ($scope,$http,$interval) {
     }
 
     $scope.$watch('allFetched', function() {
-      if($scope.allFetched == 4)
+      if($scope.allFetched == 5)
       {
         $scope.changeLanguage($scope.languages[0]);
       }

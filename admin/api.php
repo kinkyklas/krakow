@@ -12,11 +12,11 @@ if (isset($_GET["action"]))
     switch ($action)
     {
         case "get_tours":
-          $sqlstring = "SELECT * FROM tbl_tours";
+          $sqlstring = "SELECT * FROM tbl_tours ORDER BY id";
           returnJsonData($sqlstring,$conn);
           break;
         case "get_editable_tours":
-            $sqlstring = "SELECT * FROM tbl_tours inner join tbl_tours_text on tbl_tours_text.TourId = tbl_tours.Id where tbl_tours_text.LanguageId = 4";
+            $sqlstring = "SELECT * FROM tbl_tours inner join tbl_tours_text on tbl_tours_text.TourId = tbl_tours.Id where tbl_tours_text.LanguageId = 4 order by tbl_tours.Id";
             returnJsonData($sqlstring,$conn);
           break;
         case "get_selected_tour":
@@ -72,23 +72,23 @@ if (isset($_GET["action"]))
         case "save_tour":
             $id = mysqli_real_escape_string($db,$_GET["id"]);
             $duration= mysqli_real_escape_string($db,$_GET["duration"]);
-            $price = mysqli_real_escape_string($db,$_GET["price"]);
             $img= mysqli_real_escape_string($db,$_GET["img"]);
-            $sqlstring = "UPDATE tbl_tours SET Price ='".$price."',Duration ='".$duration."',Img ='".$img."' WHERE Id =".$id;
+            $sqlstring = "UPDATE tbl_tours SET Duration ='".$duration."',Img ='".$img."' WHERE Id =".$id;
             updateData($sqlstring,$conn);
             break;
 
         case "save_tour_text":
             $id = mysqli_real_escape_string($db,$_GET["id"]);
+            $price = mysqli_real_escape_string($db,$_GET["price"]);
             $shortdescription= mysqli_real_escape_string($db,$_GET["shortdescription"]);
             $longdescription = mysqli_real_escape_string($db,$_GET["longdescription"]);
             $title= mysqli_real_escape_string($db,$_GET["title"]);
-            $sqlstring = "UPDATE tbl_tours_text SET ShortDescription ='".$shortdescription."',LongDescription ='".$longdescription."',Title ='".$title."' WHERE Id =".$id;
+            $sqlstring = "UPDATE tbl_tours_text SET ShortDescription ='".$shortdescription."',LongDescription ='".$longdescription."',Title ='".$title."', Price = '".$price."' WHERE Id =".$id;
             updateData($sqlstring,$conn);
             break;
 
         case "insert_tour":
-            $sqlstring = "Insert INTO tbl_tours(price, duration,img) VALUES(0,'0:00','')";
+            $sqlstring = "Insert INTO tbl_tours(duration,img) VALUES('0:00','')";
             updateData($sqlstring,$conn);
             $sqlstring = "SELECT * FROM tbl_tours ORDER BY id DESC LIMIT 1";
             returnJsonData($sqlstring,$conn);
@@ -97,7 +97,7 @@ if (isset($_GET["action"]))
         case "insert_tour_texts":
             $languageid= mysqli_real_escape_string($db,$_GET["languageid"]);
             $tourid = mysqli_real_escape_string($db,$_GET["tourid"]);
-            $sqlstring = "Insert INTO tbl_tours_text(ShortDescription, LongDescription,Title,LanguageId,TourId) VALUES('enter short description','enter long description','click to edit new tour',".$languageid.",".$tourid.")";
+            $sqlstring = "Insert INTO tbl_tours_text(ShortDescription, LongDescription,Title,LanguageId,TourId,Price) VALUES('enter short description','enter long description','click to edit new tour',".$languageid.",".$tourid.",'enter price')";
             updateData($sqlstring,$conn);
             $sqlstring = "SELECT * FROM tbl_tours ORDER BY id DESC LIMIT 1";
             returnJsonData($sqlstring,$conn);

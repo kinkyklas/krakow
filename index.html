@@ -15,7 +15,7 @@
     <script type="text/javascript" src="scripts/angular.min.js"></script>
     <title>JUMPINCRACOW</title>
 </head>
-<body ng-controller="MainCtrl" ng-init="init()">
+<body ng-controller="MainCtrl" ng-init="init()" scroll>
     <header>
         <section id="desktop-menu">
             <div>
@@ -71,7 +71,7 @@
 
         </div>
         <div id="tour-details-content">
-          {{translation.Price}}: {{tourDetailsInfo.Price}}  {{translation.Duration}}: {{tourDetailsInfo.Duration}}
+          {{translation.Price}}: {{(tourDetailsInfo.Languages | filter: {LanguageId : languageId})[0].Price}}  {{translation.Duration}}: {{tourDetailsInfo.Duration}}
           <hr />
             <div ta-bind ng-model="(tourDetailsInfo.Languages | filter: {LanguageId : languageId})[0].LongDescription"></div>
 
@@ -86,17 +86,20 @@
                 <h2 class="h2">{{translation.Tours}}</h2>
 
                 <div ng-repeat="tour in tours" class="tour-container" ng-show="!showDetailedTour">
-                    <div class="tour-img">
-                        <img src="content/imgs/uploads/{{tour.Img}}" ng-click="zoomImg(this)" />
-                        <p class="tour-price">{{tour.Price}}</p>
-                    </div>
-                      <div ng-repeat="item in tour.Languages | filter: filterOnLanguageId">
+                    <div  ng-repeat="item in tour.Languages | filter: filterOnLanguageId">
+                      <div class="tour-img">
+                          <img src="content/imgs/uploads/{{tour.Img}}" ng-click="zoomImg(this)" />
+                          <p class="tour-price">{{item.Price}}</p>
+                      </div>
+                      <div>
                         <p>{{item.Title}} <span class="tour-hours">{{tour.Duration}} </span></p>
                         <p>{{item.ShortDescription}}</p>
 
-                          <a ng-click="showDetails(tour)">{{translation.Details}}....</a>
+                        <a ng-click="showDetails(tour)">{{translation.Details}}....</a>
                       </div>
+                    </div>
                 </div>
+
 
             </section>
             <section id="about">

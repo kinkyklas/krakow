@@ -12,6 +12,7 @@ app.controller('MainCtrl', ['$scope','$http','$timeout','textAngularManager','$l
       $scope.fetchContact();
       $scope.fetchPictures();
 
+    
 
       var urlstring = $location.absUrl();
       if(urlstring.match("success") != undefined)
@@ -223,7 +224,6 @@ app.controller('MainCtrl', ['$scope','$http','$timeout','textAngularManager','$l
                 action : "save_tour",
                 id: tour.TourId,
                 duration: tour.Duration,
-                price: tour.Price,
                 img: tour.Img
             }
         }).then(function(response) {
@@ -238,7 +238,8 @@ app.controller('MainCtrl', ['$scope','$http','$timeout','textAngularManager','$l
                         id: item.Id,
                         title: item.Title,
                         longdescription: item.LongDescription,
-                        shortdescription: item.ShortDescription
+                        shortdescription: item.ShortDescription,
+                        price: item.Price
                     }
                 }).then(function(response) {
                         $( "body" ).scrollTop( 0 );
@@ -280,7 +281,7 @@ app.controller('MainCtrl', ['$scope','$http','$timeout','textAngularManager','$l
 
     $scope.useAsAboutImg = function(picture)
     {
-      
+
 
       $http({
           method: "GET",
